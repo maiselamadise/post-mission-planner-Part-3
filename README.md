@@ -31,3 +31,17 @@ GET 200 · POST 201 · PUT 204 · DELETE 200 · bad input/id 400 · missing reco
 
 ## Tests
 `npm test` (or `npm run test:verbose` to list every test name, useful for the demo video) runs Jest + Supertest with mocked models (no database needed): GET, GET by id, 400/404/500 paths, and 401 on protected routes.
+
+(Maisela Manhla Madise)I completed this project on my own, so I designed and built every part of it. The main contributions were:
+
+1. API and database layer. I built the Express and MongoDB (Mongoose) API with full CRUD (GET, GetAll, POST, PUT, DELETE) for four collections: spiritualGoals, careerGoals, financialGoals and educationGoals. I wrote a reusable CRUD controller factory (crudController.js) and the four Mongoose models, and I return the correct status codes (200, 201, 204, 400, 401, 404, 500).
+
+2. Data validation and error handling. I added schema-level validation (required fields, enums, min/max ranges, length limits) to every model and enabled runValidators on PUT. I wrapped every handler in try/catch, wrote a shared error handler that returns 400 or 500, and wrote validateObjectId middleware to reject malformed ids.
+
+3. GitHub OAuth authentication. I implemented GitHub OAuth with Passport and express-session, and wrote the requireAuth middleware that protects all POST, PUT and DELETE routes. I also wrote the callback URL logic so the deployed app never redirects to localhost.
+
+4. Swagger documentation. I wrote swagger.json for all endpoints, including the cookie-auth security scheme, request and response schemas and example values, and served it at /api-docs.
+
+5. Unit testing. I wrote Jest and Supertest tests with mocked models for the GET and GetAll routes of all four collections, covering success, empty, 400, 404 and 500 cases, plus 401 checks on the protected routes.
+
+6. Deployment and security. I deployed the app to Render with MongoDB Atlas, kept all secrets in environment variables, and excluded .env from GitHub via .gitignore.
